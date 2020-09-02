@@ -6,8 +6,6 @@ async function loadData(){
 }
 
 function displayData(todos){
-    console.log(nodeList);
-
     let todoDisplay = document.querySelector(".todoDisplay");
     todos.forEach(todo => {
         todoDisplay.append(todo);
@@ -26,7 +24,9 @@ function makeTodo(data){
     let features = document.createElement("div");
     features.classList.add("features");
     let urgency = document.createElement("img");
+    urgency.src = "./images/urgency/" + data.urgency + ".svg";
     let category = document.createElement("img");
+    category.src = "./images/category/" + data.category + ".svg";
     features.append(urgency,category);
 
     let markComplete = document.createElement("div");
@@ -54,7 +54,18 @@ function updateAnalytics(todos){
     let completed = todos.filter(todo => todo.classList.contains("completed")).length;
     let total = todos.length;
 
-    percentage.innerHTML = Math.floor(completed*100/total) + "%";
+    let per = Math.floor(completed*100/total)
+
+    let progressL = document.querySelector('.leftProgress');
+    let progressR = document.querySelector('.rightProgress');
+
+    let left = (Math.floor(per/50))?180:per*180/50;
+    let right = (per > 50)?(per-50)*180/50:0 ;
+
+    progressL.style.transform = "rotate(" + left +"deg)";
+    progressR.style.transform = "rotate(" + right +"deg)";
+
+    percentage.innerHTML = per + "%";
     ratio.innerHTML = completed + " / " + total;
 }
 
@@ -110,5 +121,6 @@ loadData().then(data => {
     // console.log(todoData);
     displayData(nodeList);
 });
+
 
 document.querySelector("form").addEventListener("submit", addTodo);

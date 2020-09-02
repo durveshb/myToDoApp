@@ -6,7 +6,7 @@
 
 .completed {
     box-shadow: 0 0 0 0 !important;
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 .pinned {
@@ -105,8 +105,6 @@ body {
     height: 50px;
     width: 50px;
     margin: 10px;
-    border-radius: 50%;
-    border: 1px solid #456078
 }
 
 .markComplete {
@@ -146,15 +144,30 @@ body {
 
 .percentageGraphic {
     margin: 20px;
+    height: 220px;
+    width: 220px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0 0 10px 4px rgba(0,0,0,0.2);
+}
+.inner {
     height: 200px;
     width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
+    position: relative;
+    z-index: 5;
+    background-color: #456078;
     border-radius: 50%;
-    border : 10px solid #fff;
+
+    box-shadow: inset 0 0 10px 4px rgba(0,0,0,0.2);
 }
 
 #percentageComplete {
@@ -166,6 +179,42 @@ body {
     color: #ddd;
     font-size: 1em;
 }
+
+.halfCircle {
+    position: absolute;
+    top:0;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    transform-origin: right center;
+    z-index: 3;
+}
+.leftHalf {
+    clip : rect(0,220px,220px,110px);
+}
+.rightHalf {
+    clip : rect(0,110px,220px,0);
+}
+
+.progress {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    z-index: 10;
+    background-color: rgb(53, 178, 236);
+}
+
+.leftProgress {
+    border-radius: 110px 0 0 110px;
+    transform-origin: center right;
+}
+
+.rightProgress {
+    border-radius: 0 110px 110px 0;
+    transform-origin: center left;
+    left: 110px;
+}
+
 
 .addForm {
     flex:2;
@@ -203,9 +252,12 @@ form > input {
     border: 1px solid #456078;
     padding-left: 20px;
     outline: none;
-    font-size: 1.2em;
+}
+form > input::placeholder {
+    font-size: 1.4em;
     color: #456078;
 }
+
 form label {
     margin-top: 10px;
     padding: 10px;
