@@ -1,0 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.completed {
+    box-shadow: 0 0 0 0 !important;
+    opacity: 0.5;
+}
+
+.pinned {
+    order : 99;
+}
+
+
+/* -------------------------------------------- */
+body {
+    background-color: rgba(214, 219, 228, 0.658);
+}
+
+.container {
+    height: calc(100vh - 20px);
+    width: 98vw;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.header {
+    min-height: 60px;
+    height: 10vh;
+    border-radius: 30px;
+    background-color: #456078;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.header > div {
+    letter-spacing: 0.15em;
+    font-size: 1.5em;
+    padding: 15px 40px;
+    color: #fff;
+}
+
+.main {
+    height: 90vh;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 30px;
+    display: flex;
+}
+
+.todoDisplay {
+    flex:1;
+    max-height: 97.5%;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 30px;
+    background-color: #fff;
+    
+    overflow: scroll;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: flex-start;
+}
+
+.todo {
+    flex:1;
+    max-height: 250px;
+    width: 250px;
+    margin: 10px;
+    padding: 30px;
+    text-align: left;
+    border-radius: 20px;
+    background-color : rgba(214, 219, 228, 0.658);
+    box-shadow: 2px 5px 5px rgba(0,0,0,0.2);
+
+    font-size: 1.5rem;
+    color: #456078;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.todo:last-child {
+    flex-grow: 0;
+}
+
+.todoBody {
+    padding: 10px;
+    text-align: center;
+}
+
+.features {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+.features img {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+    border-radius: 50%;
+    border: 1px solid #456078
+}
+
+.markComplete {
+    padding: 10px;
+    width: 70%;
+    text-align: center;
+    font-size: 1rem;
+    border : 1px solid #456078;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+
+.sidebar {
+    border-radius: 30px;
+    width: 20%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar > div{
+    background-color: #456078;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+
+.filter {
+    height: 80px;
+}
+
+.analytics{
+    display: flex;
+    justify-content: center;
+    flex:1
+}
+
+.percentageGraphic {
+    margin: 20px;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    border-radius: 50%;
+    border : 10px solid #fff;
+}
+
+#percentageComplete {
+    color: #fff;
+    font-size: 3em;
+}
+
+#completeRatio {
+    color: #ddd;
+    font-size: 1em;
+}
+
+.addForm {
+    flex:2;
+    background-color: #fff !important;
+    border : 5px solid #456078 ;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.formBanner {
+    height: 12%;
+    background-color: #456078;
+    border-radius: 22px 22px 0 0;
+    text-align: center;
+    letter-spacing: 3px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    flex:1;
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+form > input {
+    margin: 10px;
+    height: 15%;
+    border-radius: 30px;
+    border: 1px solid #456078;
+    padding-left: 20px;
+    outline: none;
+    font-size: 1.2em;
+    color: #456078;
+}
+form label {
+    margin-top: 10px;
+    padding: 10px;
+    color: #456078;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+select {
+    margin: 0 10px;
+    height: 15%;
+    padding: 10px;
+    border-radius: 30px;
+    color: #456078;
+    font-size: 1.2em;
+    outline: none;
+}
+
+button {
+    height: 80px;
+    width: 80px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 3px solid #456078;
+    outline: none;
+    color: #456078;
+    font-size: 1.2em;
+}

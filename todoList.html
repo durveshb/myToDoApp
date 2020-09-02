@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="todoList.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="calender">Tuesday, September 1st</div>
+        <div class="logo">To-Do List</div>
+      </div>
+      <div class="main">
+        <div class="todoDisplay"></div>
+        <div class="sidebar">
+          <div class="filter"></div>
+          <div class="analytics">
+            <div class="percentageGraphic">
+              <h1 id="percentageComplete"></h1>
+              <h3 id="completeRatio"></h3>
+            </div>
+          </div>
+          <div class="addForm">
+            <div class="formBanner">
+              <h1>Create ToDo</h1>
+            </div>
+            <form action="submit">
+              <input type="text" placeholder="Add your todo" />
+              <label>Urgency</label>
+              <select id="urgency">
+                <option value="" disabled>Choose option</option>
+                <option value="1" selected>Low</option>
+                <option value="2">Medium</option>
+                <option value="3">High</option>
+              </select>
+              <label>Category</label>
+              <select id="category">
+                <option value="" disabled>Choose option</option>
+                <option value="1" selected>Personal</option>
+                <option value="2">Academic</option>
+                <option value="3">Social</option>
+                <option value="3">Other</option>
+              </select>
+              <button>ADD</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="todoList.js"></script>
+  </body>
+</html>

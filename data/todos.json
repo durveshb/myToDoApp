@@ -1,0 +1,34 @@
+{
+    "1" : {
+        "id": 1,
+        "body" : "Create your own Todo",
+        "category" : 3,
+        "completed" : false,
+        "urgency" : 1,
+        "pin" : false
+    },
+    "2" : {
+        "id": 2,
+        "body" : "Have you created your own todo yet",
+        "category" : 1,
+        "completed" : true,
+        "urgency" : 2,
+        "pin" : false
+    },
+    "3" : {
+        "id": 3,
+        "body" : "What are you waiting for",
+        "category" : 2,
+        "completed" : false,
+        "urgency" : 1,
+        "pin" : false
+    },
+    "4" : {
+        "id": 4,
+        "body" : "Finish this todo list",
+        "category" : 1,
+        "completed" : true,
+        "urgency" : 3,
+        "pin" : true
+    }
+}
