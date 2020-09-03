@@ -39,6 +39,10 @@ function makeTodo(data) {
   let markComplete = document.createElement("div");
   markComplete.classList.add("markComplete");
 
+  let deleteButton = document.createElement("div");
+  deleteButton.classList.add("deleteBtn");
+  deleteButton.innerHTML = "X";
+
   todoBody.innerHTML = data["body"];
   markComplete.innerHTML = "Mark Complete";
 
@@ -47,7 +51,7 @@ function makeTodo(data) {
     markComplete.innerHTML = "Completed. Undo?";
   }
 
-  todo.append(todoBody, features, markComplete);
+  todo.append(todoBody, features, markComplete, deleteButton);
   return todo;
 }
 
@@ -58,14 +62,21 @@ function updateAnalytics(todos) {
   let completed = todos.filter((todo) => todo.classList.contains("completed"))
     .length;
   let total = todos.length;
+  if (total === 0) {
+    percentage.innerHTML = "0%";
+    ratio.innerHTML = "0 / 0";
+    return;
+  }
 
   let per = Math.floor((completed * 100) / total);
 
   let progressL = document.querySelector(".leftProgress");
   let progressR = document.querySelector(".rightProgress");
 
-  progressL.style.transform = "rotate(" + (Math.floor(per / 50) ? 180 : (per * 180) / 50) + "deg)";
-  progressR.style.transform = "rotate(" + (per > 50 ? ((per - 50) * 180) / 50 : 0) + "deg)";
+  progressL.style.transform =
+    "rotate(" + (Math.floor(per / 50) ? 180 : (per * 180) / 50) + "deg)";
+  progressR.style.transform =
+    "rotate(" + (per > 50 ? ((per - 50) * 180) / 50 : 0) + "deg)";
 
   percentage.innerHTML = per + "%";
   ratio.innerHTML = completed + " / " + total;
@@ -80,6 +91,7 @@ function TodoAppState(data) {
   this.nodeList = data.map(makeTodo);
   this.filteredNodelist = this.nodeList;
   this.counter = this.nodeList.length;
+  this.selectedFilter = undefined;
 
   this.markCompleteHandler = (event) => {
     let todo = event.target.closest(".todo");
@@ -131,6 +143,16 @@ function TodoAppState(data) {
 
   this.filterHandler = (event) => {
     if (event.target.nodeName === "IMG") {
+      if (this.selectedFilter)
+        this.selectedFilter.classList.remove("fil-selected");
+      if(this.selectedFilter === event.target){
+          this.nodeList.forEach(node => node.style.order = 0);
+          this.selectedFilter = undefined;
+          displayData(this.nodeList);
+          return;
+      }  
+      event.target.classList.add("fil-selected");
+      this.selectedFilter = event.target;
       switch (event.target.id) {
         case "fil-ug-dec": {
           this.filteredNodelist = filterModule.urgencyFilter(this.nodeList, -1);
@@ -159,6 +181,23 @@ function TodoAppState(data) {
       }
     }
   };
+
+  this.deleteHelper = (arr, elem) => {
+    let index = arr.indexOf(elem);
+    if (index != -1) arr.splice(index, 1);
+  };
+  this.deleteHandler = (event) => {
+    if (event.target.classList.contains("deleteBtn")) {
+      let todo = event.target.closest(".todo");
+      if (todo) {
+        this.deleteHelper(this.nodeList, todo);
+        this.deleteHelper(this.filteredNodelist, todo);
+        this.todoData.splice(getIndex(todo.id, this.todoData), 1);
+
+        displayData(this.filteredNodelist);
+      }
+    }
+  };
 }
 
 loadData().then((data) => {
@@ -173,4 +212,7 @@ loadData().then((data) => {
   document
     .querySelector(".filter")
     .addEventListener("click", AppState.filterHandler);
+  document
+    .querySelector(".todoDisplay")
+    .addEventListener("click", AppState.deleteHandler);
 });

@@ -9,6 +9,11 @@
     opacity: 0.3;
 }
 
+.fil-selected {
+    transform: scale(1.25);
+    opacity: 1 !important;
+}
+
 /* -------------------------------------------- */
 body {
     background-color: rgba(214, 219, 228, 0.658);
@@ -70,6 +75,7 @@ body {
     border-radius: 20px;
     background-color : rgb(52 85 116 / 98%);;
     box-shadow: 2px 5px 5px rgba(0,0,0,0.2);
+    position: relative;
 
     font-size: 1.5rem;
     color: #fff;
@@ -111,6 +117,24 @@ body {
     cursor: pointer;
 }
 
+.deleteBtn {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #fe5f8d;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 5px 7px 10px 7px ;
+    text-align: center;
+    display: none;
+    cursor: pointer;
+}
+.todo:hover .deleteBtn {
+    display: block;
+}
+
 .completed .markComplete{
     background-color: #456078;
 }
@@ -143,6 +167,7 @@ body {
 .filtericons img{
     height: 50%;
     cursor: pointer;
+    opacity: 0.6;
 }
 
 .analytics{
