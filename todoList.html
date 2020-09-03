@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ToDo List</title>
     <link rel="stylesheet" href="todoList.css" />
+    <script type="module" src="todoList.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <div class="calender">Tuesday, September 1st</div>
+        <div class="calender">Thrusday, September 3rd</div>
         <div class="logo">To-Do List</div>
       </div>
       <div class="main">
         <div class="todoDisplay"></div>
         <div class="sidebar">
-          <div class="filter"></div>
+          <div class="filter">
+              <img id="fil-ug-dec" src="./images/urgency/3.svg" alt="">
+              <img id="fil-ug-inc" src="./images/urgency/1.svg" alt="">
+              <img id="fil-cg-per" src="./images/category/1.svg" alt="">
+              <img id="fil-cg-aca" src="./images/category/2.svg" alt="">
+              <img id="fil-cg-soc" src="./images/category/3.svg" alt="">
+          </div>
           <div class="analytics">
             <div class="percentageGraphic">
                 <div class="inner">
@@ -57,7 +64,5 @@
         </div>
       </div>
     </div>
-
-    <script src="todoList.js"></script>
   </body>
 </html>
