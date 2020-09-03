@@ -48,7 +48,6 @@ function makeTodo(data) {
   }
 
   todo.append(todoBody, features, markComplete);
-
   return todo;
 }
 
@@ -75,101 +74,101 @@ function updateAnalytics(todos) {
   ratio.innerHTML = completed + " / " + total;
 }
 
-function addTodo(event) {
-  event.preventDefault();
-  let todoBody = document.querySelector("input");
-  let urgency = document.getElementById("urgency");
-  let category = document.getElementById("category");
-
-  if (todoBody.value !== "") {
-    let newTodo = {
-      id: ++counter,
-      body: todoBody.value,
-      urgency: urgency.value,
-      category: category.value,
-    };
-
-    todoData.push(newTodo);
-    nodeList.push(makeTodo(newTodo));
-    displayData(nodeList);
-
-    todoBody.value = "";
-    urgency.value = 1;
-    category.value = 1;
-  }
-}
-
 function getIndex(id, arr) {
   return arr.findIndex((elem) => elem.id == id);
 }
 
-function markTodoComplete(event) {
-  let todo = event.target.closest(".todo");
-  if (todo && event.target.classList.contains("markComplete")) {
-    todo.classList.toggle("completed");
-    event.target.innerHTML =
-      event.target.innerHTML === "Completed. Undo?"
-        ? "Mark Complete"
-        : "Completed. Undo?";
-    let index = getIndex(todo.id, todoData);
-    todoData[index].completed = !todoData[index].completed;
+function TodoAppState(data) {
+  this.todoData = data;
+  this.nodeList = data.map(makeTodo);
+  this.filteredNodelist = this.nodeList;
+  this.counter = this.nodeList.length;
 
-    updateAnalytics(filteredNodelist);
-  }
-}
+  this.markCompleteHandler = (event) => {
+    let todo = event.target.closest(".todo");
+    if (todo && event.target.classList.contains("markComplete")) {
+      todo.classList.toggle("completed");
+      event.target.innerHTML =
+        event.target.innerHTML === "Completed. Undo?"
+          ? "Mark Complete"
+          : "Completed. Undo?";
+      let index = getIndex(todo.id, this.todoData);
+      this.todoData[index].completed = !this.todoData[index].completed;
 
-function filterTodos(event) {
-  if (event.target.nodeName === "IMG") {
-    switch (event.target.id) {
-      case "fil-ug-dec": {
-        filteredNodelist = filterModule.urgencyFilter(nodeList, -1);
-        displayData(filteredNodelist);
-        break;
-      }
-      case "fil-ug-inc": {
-        filteredNodelist = filterModule.urgencyFilter(nodeList, 1);
-        displayData(filteredNodelist);
-        break;
-      }
-      case "fil-cg-per": {
-        filteredNodelist = filterModule.categoryFilter(nodeList, 1);
-        displayData(filteredNodelist);
-        updateAnalytics(filteredNodelist);
-        break;
-      }
-      case "fil-cg-aca": {
-        filteredNodelist = filterModule.categoryFilter(nodeList, 2);
-        displayData(filteredNodelist);
-        updateAnalytics(filteredNodelist);
-        break;
-      }
-      case "fil-cg-soc": {
-        filteredNodelist = filterModule.categoryFilter(nodeList, 3);
-        displayData(filteredNodelist);
-        updateAnalytics(filteredNodelist);
-        break;
-      }
-      default:
-        console.log("Default");
+      updateAnalytics(this.filteredNodelist);
     }
-  }
-}
+  };
 
-let nodeList;
-let filteredNodelist;
-let todoData;
-let counter;
+  this.addHandler = (event) => {
+    event.preventDefault();
+    let todoBody = document.querySelector("input");
+    let urgency = document.getElementById("urgency");
+    let category = document.getElementById("category");
+
+    if (todoBody.value !== "") {
+      let newTodo = {
+        id: ++this.counter,
+        body: todoBody.value,
+        urgency: urgency.value,
+        category: category.value,
+      };
+
+      this.todoData.push(newTodo);
+      this.nodeList.push(makeTodo(newTodo));
+      displayData(this.nodeList);
+
+      todoBody.value = "";
+      urgency.value = 1;
+      category.value = 1;
+    }
+  };
+
+  this.filterHandler = (event) => {
+    if (event.target.nodeName === "IMG") {
+      switch (event.target.id) {
+        case "fil-ug-dec": {
+          this.filteredNodelist = filterModule.urgencyFilter(this.nodeList, -1);
+          displayData(this.filteredNodelist);
+          break;
+        }
+        case "fil-ug-inc": {
+          this.filteredNodelist = filterModule.urgencyFilter(this.nodeList, 1);
+          displayData(this.filteredNodelist);
+          break;
+        }
+        case "fil-cg-per": {
+          this.filteredNodelist = filterModule.categoryFilter(this.nodeList, 1);
+          displayData(this.filteredNodelist);
+          updateAnalytics(this.filteredNodelist);
+          break;
+        }
+        case "fil-cg-aca": {
+          this.filteredNodelist = filterModule.categoryFilter(this.nodeList, 2);
+          displayData(this.filteredNodelist);
+          updateAnalytics(this.filteredNodelist);
+          break;
+        }
+        case "fil-cg-soc": {
+          this.filteredNodelist = filterModule.categoryFilter(this.nodeList, 3);
+          displayData(this.filteredNodelist);
+          updateAnalytics(this.filteredNodelist);
+          break;
+        }
+        default:
+          console.log("Default");
+      }
+    }
+  };
+}
 
 loadData().then((data) => {
-  todoData = data;
-  nodeList = data.map(makeTodo);
-  filteredNodelist = nodeList;
-  counter = nodeList.length;
-  displayData(nodeList);
+  let AppState = new TodoAppState(data);
+  displayData(AppState.nodeList);
+  document.querySelector("form").addEventListener("submit", AppState.addHandler);
+  document
+    .querySelector(".todoDisplay")
+    .addEventListener("click", AppState.markCompleteHandler);
+  document
+    .querySelector(".filter")
+    .addEventListener("click", AppState.filterHandler);
 });
-
-document.querySelector("form").addEventListener("submit", addTodo);
-document
-  .querySelector(".todoDisplay")
-  .addEventListener("click", markTodoComplete);
-document.querySelector(".filter").addEventListener("click", filterTodos);
