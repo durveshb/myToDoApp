@@ -64,11 +64,8 @@ function updateAnalytics(todos) {
   let progressL = document.querySelector(".leftProgress");
   let progressR = document.querySelector(".rightProgress");
 
-  let left = Math.floor(per / 50) ? 180 : (per * 180) / 50;
-  let right = per > 50 ? ((per - 50) * 180) / 50 : 0;
-
-  progressL.style.transform = "rotate(" + left + "deg)";
-  progressR.style.transform = "rotate(" + right + "deg)";
+  progressL.style.transform = "rotate(" + (Math.floor(per / 50) ? 180 : (per * 180) / 50) + "deg)";
+  progressR.style.transform = "rotate(" + (per > 50 ? ((per - 50) * 180) / 50 : 0) + "deg)";
 
   percentage.innerHTML = per + "%";
   ratio.innerHTML = completed + " / " + total;
@@ -123,6 +120,15 @@ function TodoAppState(data) {
     }
   };
 
+  this.filterHelper = (category) => {
+    this.filteredNodelist = filterModule.categoryFilter(
+      this.nodeList,
+      category
+    );
+    displayData(this.filteredNodelist);
+    updateAnalytics(this.filteredNodelist);
+  };
+
   this.filterHandler = (event) => {
     if (event.target.nodeName === "IMG") {
       switch (event.target.id) {
@@ -137,25 +143,19 @@ function TodoAppState(data) {
           break;
         }
         case "fil-cg-per": {
-          this.filteredNodelist = filterModule.categoryFilter(this.nodeList, 1);
-          displayData(this.filteredNodelist);
-          updateAnalytics(this.filteredNodelist);
+          this.filterHelper(1);
           break;
         }
         case "fil-cg-aca": {
-          this.filteredNodelist = filterModule.categoryFilter(this.nodeList, 2);
-          displayData(this.filteredNodelist);
-          updateAnalytics(this.filteredNodelist);
+          this.filterHelper(2);
           break;
         }
         case "fil-cg-soc": {
-          this.filteredNodelist = filterModule.categoryFilter(this.nodeList, 3);
-          displayData(this.filteredNodelist);
-          updateAnalytics(this.filteredNodelist);
+          this.filterHelper(3);
           break;
         }
         default:
-          console.log("Default");
+          displayData(this.filteredNodelist);
       }
     }
   };
@@ -164,7 +164,9 @@ function TodoAppState(data) {
 loadData().then((data) => {
   let AppState = new TodoAppState(data);
   displayData(AppState.nodeList);
-  document.querySelector("form").addEventListener("submit", AppState.addHandler);
+  document
+    .querySelector("form")
+    .addEventListener("submit", AppState.addHandler);
   document
     .querySelector(".todoDisplay")
     .addEventListener("click", AppState.markCompleteHandler);

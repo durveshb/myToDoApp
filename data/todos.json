@@ -28,7 +28,7 @@
         "body" : "Update Instagram. It's been ages",
         "category" : 3,
         "completed" : true,
-        "urgency" : 3,
+        "urgency" : 2,
         "pin" : true
     }
 }

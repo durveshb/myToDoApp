@@ -17,11 +17,14 @@
         <div class="todoDisplay"></div>
         <div class="sidebar">
           <div class="filter">
-              <img id="fil-ug-dec" src="./images/urgency/3.svg" alt="">
-              <img id="fil-ug-inc" src="./images/urgency/1.svg" alt="">
-              <img id="fil-cg-per" src="./images/category/1.svg" alt="">
-              <img id="fil-cg-aca" src="./images/category/2.svg" alt="">
-              <img id="fil-cg-soc" src="./images/category/3.svg" alt="">
+              <div class="filtericons">
+                <img id="fil-ug-dec" src="./images/urgency/3.svg" alt="">
+                <img id="fil-ug-inc" src="./images/urgency/1.svg" alt="">
+                <img id="fil-cg-per" src="./images/category/1.svg" alt="">
+                <img id="fil-cg-aca" src="./images/category/2.svg" alt="">
+                <img id="fil-cg-soc" src="./images/category/3.svg" alt="">
+              </div>
+              <h3>Filter Todos</h3>
           </div>
           <div class="analytics">
             <div class="percentageGraphic">
@@ -36,27 +39,28 @@
                     <div class="rightProgress progress"></div>
                 </div>
             </div>
+            <h3>Analytics</h3>
           </div>
           <div class="addForm">
             <div class="formBanner">
               <h1>Create ToDo</h1>
             </div>
             <form action="submit">
+              <label>Message</label>
               <input type="text" placeholder="Add your todo" />
               <label>Urgency</label>
               <select id="urgency">
-                <option value="" disabled>Choose option</option>
+                <option value="" disabled>Choose your level of urgency</option>
                 <option value="1" selected>Low</option>
                 <option value="2">Medium</option>
                 <option value="3">High</option>
               </select>
               <label>Category</label>
               <select id="category">
-                <option value="" disabled>Choose option</option>
+                <option value="" disabled>Choose the task category</option>
                 <option value="1" selected>Personal</option>
                 <option value="2">Academic</option>
                 <option value="3">Social</option>
-                <option value="3">Other</option>
               </select>
               <button>ADD</button>
             </form>
