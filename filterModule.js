@@ -1,12 +1,9 @@
-function urgencyFilter(nodeList, order) {
-  return nodeList.map((node) => {
-    node.style.order = order * node.dataset.urgency;
-    return node;
-  });
+function categoryFilter(todos,index){
+  return todos.filter(todo => todo.category === index)
 }
 
-function categoryFilter(nodeList, requiredCategory) {
-  return nodeList.filter((node) => node.dataset.category == requiredCategory);
+function urgencyFilter(todos,index){
+  return todos.sort((todo1,todo2) => index*(todo1.urgency - todo2.urgency));
 }
 
 export default {
