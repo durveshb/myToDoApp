@@ -90,6 +90,12 @@ body {
     text-align: center;
 }
 
+.timestamp {
+    color: #ddd;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
 .features {
     height: 60px;
     display: flex;

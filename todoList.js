@@ -1,4 +1,5 @@
 import filterModule from "./filterModule.js";
+import {months,days} from "./dates.js";
 
 async function loadData() {
   let data = await fetch("./data/todos.json");
@@ -24,6 +25,10 @@ function makeTodo(data) {
 
   let todoBody = document.createElement("div");
   todoBody.classList.add("todoBody");
+
+  let timestamp = document.createElement("div");
+  timestamp.classList.add("timestamp");
+  timestamp.innerHTML = data.timestamp;  
 
   let features = document.createElement("div");
   features.classList.add("features");
@@ -51,7 +56,7 @@ function makeTodo(data) {
     markComplete.innerHTML = "Completed. Undo?";
   }
 
-  todo.append(todoBody, features, markComplete, deleteButton);
+  todo.append(todoBody, timestamp, features, markComplete, deleteButton);
   return todo;
 }
 
@@ -120,6 +125,7 @@ function TodoAppState(data) {
         body: todoBody.value,
         urgency: urgency.value,
         category: category.value,
+        timestamp: new Date().toLocaleString(),
       };
 
       this.todoData.push(newTodo);
@@ -216,3 +222,6 @@ loadData().then((data) => {
     .querySelector(".todoDisplay")
     .addEventListener("click", AppState.deleteHandler);
 });
+
+let d = new Date();
+document.querySelector(".calender").innerHTML = `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
