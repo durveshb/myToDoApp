@@ -24,32 +24,34 @@ function makeTodo(data) {
   todo.classList.add("todo");
 
   const todoBody = document.createElement("div");
-  todoBody.classList.add("todoBody");
+  todoBody.classList.add("todo__body");
   todoBody.innerHTML = data["body"];
 
   const timestamp = document.createElement("div");
-  timestamp.classList.add("timestamp");
+  timestamp.classList.add("todo__timestamp");
   timestamp.innerHTML = data.timestamp;
 
   const features = document.createElement("div");
-  features.classList.add("features");
+  features.classList.add("todo__features");
   const urgency = document.createElement("img");
+  urgency.classList.add("todo__featureImg");
   urgency.src = "./images/urgency/" + data.urgency + ".svg";
   const category = document.createElement("img");
+  category.classList.add("todo__featureImg");
   category.src = "./images/category/" + data.category + ".svg";
   features.append(urgency, category);
 
   const markComplete = document.createElement("div");
-  markComplete.classList.add("markComplete");
+  markComplete.classList.add("todo__markComplete");
   markComplete.innerHTML = "Mark Complete";
 
   if (data.completed) {
-    todo.classList.add("completed");
+    todo.classList.add("todo--completed");
     markComplete.innerHTML = "Completed. Undo?";
   }
 
   const deleteButton = document.createElement("div");
-  deleteButton.classList.add("deleteBtn");
+  deleteButton.classList.add("todo__deleteBtn");
   deleteButton.innerHTML = "X";
 
   todo.append(todoBody, timestamp, features, markComplete, deleteButton);
@@ -57,8 +59,8 @@ function makeTodo(data) {
 }
 
 function updateAnalytics(todos, selectedFilter) {
-  const percentage = document.getElementById("percentageComplete");
-  const ratio = document.getElementById("completeRatio");
+  const percentage = document.querySelector(".analytics__percentage");
+  const ratio = document.querySelector(".analytics__ratio");
 
   const filteredTodos = filterTodos(todos, selectedFilter);
   const completed = filteredTodos.filter((todo) => todo.completed).length;
@@ -72,8 +74,8 @@ function updateAnalytics(todos, selectedFilter) {
 
   const per = Math.floor((completed * 100) / total);
 
-  const progressL = document.querySelector(".leftProgress");
-  const progressR = document.querySelector(".rightProgress");
+  const progressL = document.querySelector(".graphic__leftProgress");
+  const progressR = document.querySelector(".graphic__rightProgress");
 
   progressL.style.transform =
     "rotate(" + (Math.floor(per / 50) ? 180 : (per * 180) / 50) + "deg)";
@@ -123,8 +125,8 @@ function TodoAppState(data) {
 
   this.markCompleteHandler = (event) => {
     const todo = event.target.closest(".todo");
-    if (todo && event.target.classList.contains("markComplete")) {
-      todo.classList.toggle("completed");
+    if (todo && event.target.classList.contains("todo__markComplete")) {
+      todo.classList.toggle("todo--completed");
       event.target.innerHTML =
         event.target.innerHTML === "Completed. Undo?"
           ? "Mark Complete"
@@ -138,9 +140,9 @@ function TodoAppState(data) {
 
   this.addHandler = (event) => {
     event.preventDefault();
-    const todoBody = document.querySelector("input");
-    const urgency = document.getElementById("urgency");
-    const category = document.getElementById("category");
+    const todoBody = document.querySelector(".addForm__message");
+    const urgency = document.querySelector(".addForm__urgency");
+    const category = document.querySelector(".addForm__category");
 
     if (todoBody.value !== "") {
       this.todoData.push({
@@ -164,14 +166,14 @@ function TodoAppState(data) {
   this.filterHandler = (event) => {
     if (event.target.nodeName === "IMG") {
       if (this.selectedFilter === event.target.id) {
-        event.target.classList.remove("fil-selected");
+        event.target.classList.remove("filtericons__icon--selected");
         this.selectedFilter = "NONE";
       } else {
         const filterIcons = document.querySelector(".filtericons");
         Array.from(filterIcons.children).forEach((child) =>
-          child.classList.remove("fil-selected")
+          child.classList.remove("filtericons__icon--selected")
         );
-        event.target.classList.add("fil-selected");
+        event.target.classList.add("filtericons__icon--selected");
         this.selectedFilter = event.target.id;
       }
       displayData(this.todoData, this.selectedFilter);
@@ -179,7 +181,7 @@ function TodoAppState(data) {
   };
 
   this.deleteHandler = (event) => {
-    if (event.target.classList.contains("deleteBtn")) {
+    if (event.target.classList.contains("todo__deleteBtn")) {
       const todo = event.target.closest(".todo");
       if (todo) {
         this.todoData.splice(getIndex(todo.id, this.todoData), 1);
@@ -191,7 +193,7 @@ function TodoAppState(data) {
 
 function loadDate() {
   const currDate = new Date();
-  document.querySelector(".calender").innerHTML = `${
+  document.querySelector(".header__calender").innerHTML = `${
     days[currDate.getDay()]
   }, ${months[currDate.getMonth()]} ${currDate.getDate()}`;
 }
@@ -207,7 +209,7 @@ loadData("Eve").then((data) => {
   todoDisplay.addEventListener("mousedown", (e) => e.preventDefault(), false);
 
   document
-    .querySelector("form")
+    .querySelector(".addForm__form")
     .addEventListener("submit", AppState.addHandler);
   document
     .querySelector(".filter")

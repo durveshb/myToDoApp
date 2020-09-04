@@ -4,17 +4,6 @@
     font-family: sans-serif;
 }
 
-.completed {
-    box-shadow: 0 0 0 0 !important;
-    opacity: 0.3;
-}
-
-.fil-selected {
-    transform: scale(1.25);
-    opacity: 1 !important;
-}
-
-/* -------------------------------------------- */
 body {
     background-color: rgba(214, 219, 228, 0.658);
 }
@@ -38,7 +27,7 @@ body {
     justify-content: space-between;
 }
 
-.header > div {
+.header__calender, .header__logo {
     letter-spacing: 0.15em;
     font-size: 1.5em;
     padding: 15px 40px;
@@ -85,18 +74,18 @@ body {
     align-items: center;
 }
 
-.todoBody {
+.todo__body {
     padding: 10px;
     text-align: center;
 }
 
-.timestamp {
+.todo__timestamp {
     color: #ddd;
     font-size: 0.8rem;
     letter-spacing: 2px;
 }
 
-.features {
+.todo__features {
     height: 60px;
     display: flex;
     justify-content: center;
@@ -104,13 +93,13 @@ body {
     margin: 20px;
 }
 
-.features img {
+.todo__featureImg {
     height: 50px;
     width: 50px;
     margin: 10px;
 }
 
-.markComplete {
+.todo__markComplete {
     padding: 10px;
     width: 70%;
     text-align: center;
@@ -123,7 +112,7 @@ body {
     cursor: pointer;
 }
 
-.deleteBtn {
+.todo__deleteBtn {
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -137,11 +126,17 @@ body {
     display: none;
     cursor: pointer;
 }
-.todo:hover .deleteBtn {
+
+.todo:hover .todo__deleteBtn {
     display: block;
 }
 
-.completed .markComplete{
+.todo--completed {
+    box-shadow: 0 0 0 0 !important;
+    opacity: 0.3;
+}
+
+.todo--completed .todo__markComplete{
     background-color: #456078;
 }
 
@@ -151,7 +146,7 @@ body {
     flex-direction: column;
 }
 
-.sidebar > div{
+.filter, .analytics, .addForm {
     background-color: #456078;
     border-radius: 30px;
     margin-bottom: 10px;
@@ -163,6 +158,7 @@ body {
     align-items: center;
     flex-shrink: 0;
 }
+
 .filtericons {
     display: flex;
     height: 80px;
@@ -170,10 +166,21 @@ body {
     justify-content: space-evenly;
     align-items: center;
 }
-.filtericons img{
+
+.filtericons__icon {
     height: 50%;
     cursor: pointer;
     opacity: 0.6;
+}
+
+.filter__label {
+    color: #ddd;
+    margin-bottom: 10px;
+}
+
+.filtericons__icon--selected {
+    transform: scale(1.25);
+    opacity: 1 !important;
 }
 
 .analytics{
@@ -181,12 +188,13 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.sidebar h3 {
+
+.analytics__label {
     color: #ddd;
     margin-bottom: 10px;
 }
 
-.percentageGraphic,.inner {
+.analytics__graphic, .analytics__data {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -194,7 +202,7 @@ body {
     border-radius: 50%;
 }
 
-.percentageGraphic {
+.analytics__graphic{
     margin: 20px 20px 10px 20px;
     height: 220px;
     width: 220px;
@@ -202,7 +210,8 @@ body {
     position: relative;
     box-shadow: 0 0 10px 4px rgba(0,0,0,0.2);
 }
-.inner {
+
+.analytics__data {
     height: 200px;
     width: 200px;
     flex-direction: column;
@@ -211,21 +220,21 @@ body {
     box-shadow: inset 0 0 10px 4px rgba(0,0,0,0.2);
 }
 
-#percentageComplete, #completeRatio{
+.analytics__percentage, .analytics__ratio{
     text-shadow: 0px 0px 10px #333;
 }
 
-#percentageComplete {
+.analytics__percentage {
     color: #fff;
     font-size: 3em;
 }
 
-#completeRatio {
+.analytics__ratio {
     color: #ddd;
     font-size: 1em;
 }
 
-.halfCircle {
+.graphic__halfCircle {
     position: absolute;
     top:0;
     height: 100%;
@@ -234,14 +243,16 @@ body {
     transform-origin: right center;
     z-index: 3;
 }
-.leftHalf {
+
+.graphic__leftHalf {
     clip : rect(0,220px,220px,110px);
 }
-.rightHalf {
+
+.graphic__rightHalf {
     clip : rect(0,110px,220px,0);
 }
 
-.progress {
+.graphic__progress {
     position: absolute;
     height: 100%;
     width: 50%;
@@ -249,12 +260,12 @@ body {
     background-color: rgb(53, 178, 236);
 }
 
-.leftProgress {
+.graphic__leftProgress {
     border-radius: 110px 0 0 110px;
     transform-origin: center right;
 }
 
-.rightProgress {
+.graphic__rightProgress {
     border-radius: 0 110px 110px 0;
     transform-origin: center left;
     left: 110px;
@@ -268,7 +279,7 @@ body {
     flex-direction: column;
 }
 
-.formBanner {
+.addForm__banner {
     height: 100px;
     background-color: #456078;
     border-radius: 22px 22px 0 0;
@@ -280,14 +291,14 @@ body {
     justify-content: center;
 }
 
-form {
+.addForm__form {
     flex:1;
     padding: 10px;
     display: flex;
     flex-direction: column;
 }
 
-form > input {
+.addForm__message {
     margin: 0 10px;
     height: 15%;
     border-radius: 30px;
@@ -295,19 +306,20 @@ form > input {
     padding-left: 20px;
     outline: none;
 }
-form > input::placeholder {
+
+.addForm__message::placeholder {
     font-size: 1.4em;
     color: #456078;
 }
 
-form label {
+.addForm__label {
     padding: 10px;
     color: #456078;
     font-size: 1.3em;
     text-align: center;
 }
 
-select {
+.addForm__urgency, .addForm__category {
     margin: 0 10px;
     height: 15%;
     padding: 10px;
@@ -317,7 +329,7 @@ select {
     outline: none;
 }
 
-button {
+.addForm__submit {
     height: 80px;
     width: 80px;
     margin: 10px auto;

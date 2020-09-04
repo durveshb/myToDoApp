@@ -10,59 +10,59 @@
   <body>
     <div class="container">
       <div class="header">
-        <div class="calender"></div>
-        <div class="logo">To-Do List</div>
+        <div class="header__calender"></div>
+        <div class="header__logo">To-Do List</div>
       </div>
       <div class="main">
         <div class="todoDisplay"></div>
         <div class="sidebar">
           <div class="filter">
               <div class="filtericons">
-                <img id="fil-ug-dec" src="./images/urgency/3.svg" alt="">
-                <img id="fil-ug-inc" src="./images/urgency/1.svg" alt="">
-                <img id="fil-cg-per" src="./images/category/1.svg" alt="">
-                <img id="fil-cg-aca" src="./images/category/2.svg" alt="">
-                <img id="fil-cg-soc" src="./images/category/3.svg" alt="">
+                <img id="fil-ug-dec" class="filtericons__icon" src="./images/urgency/3.svg" alt="">
+                <img id="fil-ug-inc" class="filtericons__icon" src="./images/urgency/1.svg" alt="">
+                <img id="fil-cg-per" class="filtericons__icon" src="./images/category/1.svg" alt="">
+                <img id="fil-cg-aca" class="filtericons__icon" src="./images/category/2.svg" alt="">
+                <img id="fil-cg-soc" class="filtericons__icon" src="./images/category/3.svg" alt="">
               </div>
-              <h3>Filter Todos</h3>
+              <h3 class="filter__label">Filter Todos</h3>
           </div>
           <div class="analytics">
-            <div class="percentageGraphic">
-                <div class="inner">
-                    <h1 id="percentageComplete"></h1>
-                    <h3 id="completeRatio"></h3>
+            <div class="analytics__graphic graphic">
+                <div class="analytics__data">
+                    <h1 class="analytics__percentage"></h1>
+                    <h3 class="analytics__ratio"></h3>
                 </div>
-                <div class="leftHalf halfCircle">
-                    <div class="leftProgress progress"></div>
+                <div class="graphic__leftHalf graphic__halfCircle">
+                    <div class="graphic__leftProgress graphic__progress"></div>
                 </div>
-                <div class="rightHalf halfCircle">
-                    <div class="rightProgress progress"></div>
+                <div class="graphic__rightHalf graphic__halfCircle">
+                    <div class="graphic__rightProgress graphic__progress"></div>
                 </div>
             </div>
-            <h3>Analytics</h3>
+            <h3 class="analytics__label">Analytics</h3>
           </div>
           <div class="addForm">
-            <div class="formBanner">
+            <div class="addForm__banner">
               <h1>Create ToDo</h1>
             </div>
-            <form action="submit">
-              <label>Message</label>
-              <input type="text" placeholder="Add your todo" />
-              <label>Urgency</label>
-              <select id="urgency">
+            <form action="submit" class="addForm__form">
+              <label class="addForm__label">Message</label>
+              <input class="addForm__message" type="text" placeholder="Add your todo" />
+              <label class="addForm__label">Urgency</label>
+              <select class="addForm__urgency">
                 <option value="" disabled>Choose your level of urgency</option>
                 <option value="1" selected>Low</option>
                 <option value="2">Medium</option>
                 <option value="3">High</option>
               </select>
-              <label>Category</label>
-              <select id="category">
+              <label class="addForm__label">Category</label>
+              <select class="addForm__category">
                 <option value="" disabled>Choose the task category</option>
                 <option value="1" selected>Personal</option>
                 <option value="2">Academic</option>
                 <option value="3">Social</option>
               </select>
-              <button>ADD</button>
+              <button class="addForm__submit">ADD</button>
             </form>
           </div>
         </div>
