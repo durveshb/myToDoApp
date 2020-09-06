@@ -191,17 +191,19 @@ function TodoAppState(data) {
   };
 }
 
-function loadDate() {
+function loadHeader(name) {
   const currDate = new Date();
   document.querySelector(".header__calender").innerHTML = `${
     days[currDate.getDay()]
   }, ${months[currDate.getMonth()]} ${currDate.getDate()}`;
+  document.querySelector(".header__logo").innerHTML = `Welcome, ${name}`;
 }
 
-loadData("Eve").then((data) => {
+const params = new URLSearchParams(window.location.search);
+loadData(params.get("name")).then((data) => {
   const AppState = new TodoAppState(data);
   displayData(AppState.todoData, AppState.selectedFilter);
-  loadDate();
+  loadHeader(params.get("name"));
 
   const todoDisplay = document.querySelector(".todoDisplay");
   todoDisplay.addEventListener("click", AppState.markCompleteHandler);
