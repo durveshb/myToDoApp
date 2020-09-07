@@ -1,11 +1,11 @@
 import filterModule from "./filterModule.js";
 import { months, days } from "./dates.js";
 
-async function loadData(user) {
-  let data = await fetch("./data/todos.json");
-  data = await data.json();
-  return data[user];
-}
+const incUrgency = 1;
+const decUrgency = -1;
+const onlyPersonal = 1;
+const onlyAcademic = 2;
+const onlySocial = 3;
 
 function displayData(todos, selectedFilter) {
   const todoDisplay = document.querySelector(".todoDisplay");
@@ -87,29 +87,29 @@ function updateAnalytics(todos, selectedFilter) {
 }
 
 function filterTodos(todos, selectedFilter) {
-  let filteredTodos = [...todos];
+  let filteredTodos;
   switch (selectedFilter) {
     case "fil-ug-dec": {
-      filteredTodos = filterModule.urgencyFilter(filteredTodos, -1);
+      filteredTodos = filterModule.urgencyFilter(todos, decUrgency);
       break;
     }
     case "fil-ug-inc": {
-      filteredTodos = filterModule.urgencyFilter(filteredTodos, 1);
+      filteredTodos = filterModule.urgencyFilter(todos, incUrgency);
       break;
     }
     case "fil-cg-per": {
-      filteredTodos = filterModule.categoryFilter(filteredTodos, 1);
+      filteredTodos = filterModule.categoryFilter(todos, onlyPersonal);
       break;
     }
     case "fil-cg-aca": {
-      filteredTodos = filterModule.categoryFilter(filteredTodos, 2);
+      filteredTodos = filterModule.categoryFilter(todos, onlyAcademic);
       break;
     }
     case "fil-cg-soc": {
-      filteredTodos = filterModule.categoryFilter(filteredTodos, 3);
+      filteredTodos = filterModule.categoryFilter(todos, onlySocial);
       break;
     }
-    default:
+    default: return todos;
   }
   return filteredTodos;
 }
@@ -118,75 +118,99 @@ function getIndex(id, arr) {
   return arr.findIndex((elem) => elem.id == id);
 }
 
+const getNewId = (() => {
+  let id = 100;
+  return () => id++;
+})();
+
+function addTodo(todoData) {
+  const todoBody = document.querySelector(".addForm__message");
+  const urgency = document.querySelector(".addForm__urgency");
+  const category = document.querySelector(".addForm__category");
+
+  if (todoBody.value !== "") {
+    todoData.push({
+      id: getNewId(),
+      body: todoBody.value,
+      urgency: urgency.value,
+      category: category.value,
+      completed: false,
+      pinned: false,
+      timestamp: new Date().toLocaleString(),
+    });
+  }
+  todoBody.value = "";
+  urgency.value = 1;
+  category.value = 1;
+
+  return todoData;
+}
+
+function markCompleteTodo(target, todoData) {
+  const todo = target.closest(".todo");
+  if (todo) {
+    todo.classList.toggle("todo--completed");
+    target.innerHTML =
+      target.innerHTML === "Completed. Undo?"
+        ? "Mark Complete"
+        : "Completed. Undo?";
+    const index = getIndex(todo.id, todoData);
+    todoData[index].completed = !todoData[index].completed;
+  }
+  return todoData;
+}
+
+function updateFilter(target, currFilter) {
+  if (currFilter === target.id) {
+    target.classList.remove("filtericons__icon--selected");
+    return "NONE";
+  } else {
+    if (currFilter != "NONE")
+      document
+        .querySelector(`#${currFilter}`)
+        .classList.remove("filtericons__icon--selected");
+    target.classList.add("filtericons__icon--selected");
+    return target.id;
+  }
+}
+
+function deleteTodo(target, todoData) {
+  const todo = target.closest(".todo");
+  if (todo) {
+    todoData.splice(getIndex(todo.id, todoData), 1);
+  }
+  return todoData;
+}
+
 function TodoAppState(data) {
   this.todoData = data;
   this.counter = this.todoData.length;
   this.selectedFilter = "NONE";
 
   this.markCompleteHandler = (event) => {
-    const todo = event.target.closest(".todo");
-    if (todo && event.target.classList.contains("todo__markComplete")) {
-      todo.classList.toggle("todo--completed");
-      event.target.innerHTML =
-        event.target.innerHTML === "Completed. Undo?"
-          ? "Mark Complete"
-          : "Completed. Undo?";
-      const index = getIndex(todo.id, this.todoData);
-      this.todoData[index].completed = !this.todoData[index].completed;
-
-      updateAnalytics(this.todoData, this.selectedFilter);
+    if (event.target.classList.contains("todo__markComplete")) {
+      this.todoData = markCompleteTodo(event.target, [...this.todoData]);
+      updateAnalytics([...this.todoData], this.selectedFilter);
     }
   };
 
   this.addHandler = (event) => {
     event.preventDefault();
-    const todoBody = document.querySelector(".addForm__message");
-    const urgency = document.querySelector(".addForm__urgency");
-    const category = document.querySelector(".addForm__category");
-
-    if (todoBody.value !== "") {
-      this.todoData.push({
-        id: ++this.counter,
-        body: todoBody.value,
-        urgency: urgency.value,
-        category: category.value,
-        completed: false,
-        pinned: false,
-        timestamp: new Date().toLocaleString(),
-      });
-
-      displayData(this.todoData, this.selectedFilter);
-
-      todoBody.value = "";
-      urgency.value = 1;
-      category.value = 1;
-    }
+    this.todoData = addTodo([...this.todoData]);
+    displayData([...this.todoData], this.selectedFilter);
   };
 
   this.filterHandler = (event) => {
     if (event.target.nodeName === "IMG") {
-      if (this.selectedFilter === event.target.id) {
-        event.target.classList.remove("filtericons__icon--selected");
-        this.selectedFilter = "NONE";
-      } else {
-        const filterIcons = document.querySelector(".filtericons");
-        Array.from(filterIcons.children).forEach((child) =>
-          child.classList.remove("filtericons__icon--selected")
-        );
-        event.target.classList.add("filtericons__icon--selected");
-        this.selectedFilter = event.target.id;
-      }
-      displayData(this.todoData, this.selectedFilter);
+      this.selectedFilter = updateFilter(event.target, this.selectedFilter);
+      displayData([...this.todoData], this.selectedFilter);
     }
   };
 
   this.deleteHandler = (event) => {
     if (event.target.classList.contains("todo__deleteBtn")) {
-      const todo = event.target.closest(".todo");
-      if (todo) {
-        this.todoData.splice(getIndex(todo.id, this.todoData), 1);
-        displayData(this.todoData);
-      }
+      this.todoData = deleteTodo(event.target, [...this.todoData]);
+      displayData([...this.todoData], this.selectedFilter);
     }
   };
 }
@@ -199,8 +223,7 @@ function loadHeader(name) {
   document.querySelector(".header__logo").innerHTML = `Welcome, ${name}`;
 }
 
-const params = new URLSearchParams(window.location.search);
-loadData(params.get("name")).then((data) => {
+function init(data) {
   const AppState = new TodoAppState(data);
   displayData(AppState.todoData, AppState.selectedFilter);
   loadHeader(params.get("name"));
@@ -216,4 +239,13 @@ loadData(params.get("name")).then((data) => {
   document
     .querySelector(".filter")
     .addEventListener("click", AppState.filterHandler);
-});
+}
+
+async function loadData(user) {
+  let data = await fetch("./data/todos.json");
+  data = await data.json();
+  return data[user];
+}
+
+const params = new URLSearchParams(window.location.search);
+loadData(params.get("name")).then(init);
