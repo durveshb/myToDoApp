@@ -1,43 +1,28 @@
-async function loadData(user) {
-  let data = await fetch("./data/todos.json");
-  data = await data.json();
-  return data[user];
-}
+export default class Model {
+  constructor(data) {
+    this.data = data;
+    this.selectedFilter = "NONE";
+    this.counter = data.length;
+  }
 
-const model = {
-  data: null,
-  selectedFilter: "None",
-  counter: 0,
-
-  init: function(user){
-    return new Promise((res) => {
-      loadData(user)
-        .then((data) => {
-          this.data = data;
-          this.counter = data.length;
-        })
-        .then(res);
-    });
-  },
-
-  getData: function(){
+  getData() {
     return this.data;
-  },
+  }
 
-  getSelectedFilter: function(){
+  getSelectedFilter() {
     return this.selectedFilter;
-  },
+  }
 
-  setFilter: function(filter){
+  setFilter(filter) {
     this.selectedFilter = filter;
-  },
+  }
 
-  toggleTodoComplete: function(id){
-    const [todo] = this.data.filter((item) => item.id === id);
+  toggleTodoComplete(id) {
+    const [todo] = this.data.filter((item) => item.id === Number(id));
     todo.completed = !todo.completed;
-  },
+  }
 
-  addTodo: function(body, urgency, category){
+  addTodo(body, urgency, category) {
     this.data.push({
       id: ++counter,
       body,
@@ -47,11 +32,9 @@ const model = {
       pinned: false,
       timestamp: new Date().toLocaleString(),
     });
-  },
+  }
 
-  deleteTodo: function(id){
-    this.data = this.data.filter((item) => item.id !== id);
-  },
-};
-
-export default model;
+  deleteTodo(id) {
+    this.data = this.data.filter((item) => item.id !== Number(id));
+  }
+}

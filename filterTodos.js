@@ -4,42 +4,60 @@ const onlyPersonal = 1;
 const onlyAcademic = 2;
 const onlySocial = 3;
 
-function categoryFilter(todos,index){
-  return todos.filter(todo => todo.category === index)
+function makeObjCopy(obj) {
+  const copy = {};
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] instanceof Array) copy[key] = makeArrCopy(obj[key]);
+    else if (obj[key] instanceof Object) copy[key] = makeObjCopy(obj[key]);
+    else copy[key] = obj[key];
+  });
+  return copy;
 }
 
-function urgencyFilter(todos,index){
-  return todos.sort((todo1,todo2) => index*(todo1.urgency - todo2.urgency));
+function makeArrCopy(todos) {
+  const newTodos = [];
+  todos.forEach((todo) => {
+    if (todo instanceof Array) newTodos.push(makeArrCopy(todo));
+    else if (todo instanceof Object) newTodos.push(makeObjCopy(todo));
+    else newTodos.push(todo);
+  });
+
+  return newTodos;
 }
 
-function makeCopy(todos){
-    return todos;
+function categoryFilter(todos, index) {
+  return todos.filter((todo) => todo.category === index);
+}
+
+function urgencyFilter(todos, index) {
+  return todos.sort((todo1, todo2) => index * (todo1.urgency - todo2.urgency));
 }
 
 export default function filterTodos(todos, selectedFilter) {
-  let filteredTodos = makeCopy(todos);
+  let filteredTodos = makeArrCopy(todos);
   switch (selectedFilter) {
     case "fil-ug-dec": {
-      filteredTodos = urgencyFilter(todos, decUrgency);
+      filteredTodos = urgencyFilter(filteredTodos, decUrgency);
       break;
     }
     case "fil-ug-inc": {
-      filteredTodos = urgencyFilter(todos, incUrgency);
+      filteredTodos = urgencyFilter(filteredTodos, incUrgency);
       break;
     }
     case "fil-cg-per": {
-      filteredTodos = categoryFilter(todos, onlyPersonal);
+      filteredTodos = categoryFilter(filteredTodos, onlyPersonal);
       break;
     }
     case "fil-cg-aca": {
-      filteredTodos = categoryFilter(todos, onlyAcademic);
+      filteredTodos = categoryFilter(filteredTodos, onlyAcademic);
       break;
     }
     case "fil-cg-soc": {
-      filteredTodos = categoryFilter(todos, onlySocial);
+      filteredTodos = categoryFilter(filteredTodos, onlySocial);
       break;
     }
-    default: return todos;
+    default:
+      return todos;
   }
   return filteredTodos;
 }

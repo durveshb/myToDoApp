@@ -1,57 +1,59 @@
-import model from "./model.js";
+import Modal from "./model.js";
 import view from "./view.js";
+import loadData from "./loadData.js";
 import filterTodos from "./filterTodos.js";
 
-function runView() {
-  const data = model.getData();
-  const filter = model.getSelectedFilter();
-  const filteredData = filterTodos(data, filter);
-  view.displayTodos(filteredData, handleMarkComplete, handleDelete);
-  view.updateFilterTab(filter);
-  view.updateAnalytics(filteredData);
-}
+class Controller {
+  constructor(model, view) {
+    this.model = model;
+    this.view = view;
 
-function handleDelete(id) {
-  model.deleteTodo(id);
-  runView();
-}
+    // binding the view event handlers to the controller functions
+    this.view.loadHeader();
+    this.view.bindAddTodo(this.handleAdd);
+    this.view.bindDeleteTodo(this.handleDelete);
+    this.view.bindFilterTodo(this.handleFilter);
+    this.view.bindCompleteTodo(this.handleMarkComplete);
 
-function handleMarkComplete(id) {
-  model.toggleTodoComplete(id);
-  runView();
-}
+    //initial paint
+    this.runView();
+  }
 
-function handleFilter(e) {
-  if (e.target.nodeName === "IMG") {
-    const currFil = model.getSelectedFilter();
-    if (currFil === e.target.id) {
-      model.setFilter("NONE");
+  runView = () => {
+    const data = this.model.getData();
+    const filter = this.model.getSelectedFilter();
+    const filteredData = filterTodos(data, filter);
+    this.view.displayTodos(filteredData);
+    this.view.updateFilterTab(filter);
+    this.view.updateAnalytics(filteredData);
+  };
+
+  handleDelete = (id) => {
+    this.model.deleteTodo(id);
+    this.runView();
+  };
+
+  handleMarkComplete = (id) => {
+    this.model.toggleTodoComplete(id);
+    this.runView();
+  };
+
+  handleFilter = (newFil) => {
+    const currFil = this.model.getSelectedFilter();
+    if (currFil === newFil) {
+      this.model.setFilter("NONE");
     } else {
-      model.setFilter(e.target.id);
+      this.model.setFilter(newFil);
     }
-    runView();
+    this.runView();
+  }
+
+  handleAdd = (todoBody, urgencyLevel, category) => {
+    this.model.addTodo(todoBody, urgencyLevel, category);
+    this.runView();
   }
 }
 
-function handleForm(e) {
-  e.preventDefault();
-  const todoBody = document.querySelector(".addForm__message");
-  const urgency = document.querySelector(".addForm__urgency");
-  const category = document.querySelector(".addForm__category");
-
-  if (todoBody.value !== "") {
-    model.addTodo(todoBody.value, urgency.value, category.value);
-    runView();
-  }
-  todoBody.value = "";
-  urgency.value = 1;
-  category.value = 1;
-}
-
-function init() {
-  model.init("Adam").then(() => {
-    view.initView(handleFilter, handleForm);
-    runView();
-  });
-}
-init();
+loadData("Adam").then((data) => {
+  const todoApp = new Controller(new Modal(data), view);
+});
