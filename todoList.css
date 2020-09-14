@@ -140,6 +140,49 @@ body {
     background-color: #456078;
 }
 
+.deleteWarning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.4);
+    margin: auto;
+    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.deleteNote {
+    font-size: 1.3rem;
+    padding: 10px;
+    color: #fff;
+}
+
+.warningBtn {
+    height: 30px;
+    width: 150px;
+    margin: 3px;
+    border-radius: 15px;
+    border: none;
+    letter-spacing: 1px;
+    outline: none;
+    color: #333;
+}
+
+.warningBtn:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.deleteAnyway {
+    background-color: #fe5f8d;
+    color: #fff;
+}
+
 .sidebar {
     width: 300px;
     display: flex;

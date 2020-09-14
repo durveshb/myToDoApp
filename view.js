@@ -3,7 +3,7 @@ import { days, months } from "./dates.js";
 // nodeName is the only mandatory argument
 function createElementHelper(nodeName, className = null, innerHTML = null) {
   const node = document.createElement(nodeName);
-  if (className) node.classList.add(className);
+  if (className) node.className = className;
   if (innerHTML) node.innerHTML = innerHTML;
 
   return node;
@@ -97,7 +97,6 @@ function updateAnalytics(data) {
   ratio.innerHTML = `${completed} / ${total}`;
 }
 
-// Display Date in the header
 function loadHeader() {
   const currDate = new Date();
   document.querySelector(".header__calender").innerHTML = `${
@@ -105,7 +104,39 @@ function loadHeader() {
   }, ${months[currDate.getMonth()]} ${currDate.getDate()}`;
 }
 
-// Event Listeners for the Add Todo Operation
+function showDeleteWarning(todo, deleteHandler) {
+  const warning = createElementHelper("div", "deleteWarning");
+  const warningNote = createElementHelper(
+    "div",
+    "deleteNote",
+    "You haven't finished this todo yet!"
+  );
+  let cancelbtn = createElementHelper(
+    "button",
+    "cancelWarning warningBtn",
+    "Cancel"
+  );
+  let deletebtn = createElementHelper(
+    "button",
+    "deleteAnyway warningBtn",
+    "Delete Anyway"
+  );
+  cancelbtn.addEventListener("click", () => {
+    document.body.removeChild(warning);
+    cancelbtn = null;
+    deletebtn = null;
+  });
+  deletebtn.addEventListener("click", () => {
+    document.body.removeChild(warning);
+    cancelbtn = null;
+    deletebtn = null;
+    deleteHandler(todo.id);
+  });
+
+  warning.append(warningNote, cancelbtn, deletebtn);
+  document.body.append(warning);
+}
+
 function addTodoHelper(e, callback) {
   e.preventDefault();
   const todoBody = document.querySelector(".addForm__message");
@@ -126,7 +157,6 @@ function bindAddTodo(callback) {
     .addEventListener("submit", (e) => addTodoHelper(e, callback));
 }
 
-// Event Listeners for the Delete Todo Operation
 function deleteTodoHelper(e, callback) {
   if (e.target.dataset.type === "deleteBtn") {
     const removedTodo = event.target.closest(".todo");
@@ -140,7 +170,6 @@ function bindDeleteTodo(callback) {
     .addEventListener("click", (e) => deleteTodoHelper(e, callback));
 }
 
-// Event Listeners for the Filter Operation
 function filterTodoHelper(e, callback) {
   if (e.target.nodeName === "IMG") {
     callback(e.target.id);
@@ -153,7 +182,6 @@ function bindFilterTodo(callback) {
     .addEventListener("click", (e) => filterTodoHelper(e, callback));
 }
 
-// Event Listeners for the Mark Complete Operation
 function completeTodoHelper(e, callback) {
   if (e.target.dataset.type === "completeBtn") {
     const toggledTodo = event.target.closest(".todo");
@@ -172,6 +200,7 @@ export default {
   displayTodos,
   updateFilterTab,
   updateAnalytics,
+  showDeleteWarning,
   bindAddTodo,
   bindDeleteTodo,
   bindFilterTodo,
