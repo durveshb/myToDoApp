@@ -2,7 +2,7 @@ const uuid = (function() {
   let uid = 100;
   return function() {
       uid += 1;
-      return uid.toString();
+      return uid;
   }
 })();
 
