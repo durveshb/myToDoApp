@@ -1,8 +1,15 @@
+const uuid = (function() {
+  let uid = 100;
+  return function() {
+      uid += 1;
+      return uid.toString();
+  }
+})();
+
 export default class TodoStore {
   constructor(allTodos) {
     this.allTodos = allTodos;
     this.selectedFilter = "NONE";
-    this.counter = allTodos.length;
   }
 
   getAllTodos() {
@@ -31,7 +38,7 @@ export default class TodoStore {
 
   addTodo(body, urgency, category) {
     this.allTodos.push({
-      id: ++this.counter,
+      id: uuid(),
       body,
       urgency,
       category,

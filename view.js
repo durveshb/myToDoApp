@@ -5,6 +5,13 @@ import analyticsTab from "./views/analyticsTab.js";
 import addFormTab from "./views/addFormTab.js";
 import {createElementHelper} from "./../DOMhelpers.js";
 
+function initView(){
+  loadHeader();
+  filterTab.initFilterTab();
+  analyticsTab.initAnalyticsTab();
+  addFormTab.initformTab();
+}
+
 function loadHeader() {
   const currDate = new Date();
   document.querySelector(".header__calender").innerHTML = `${
@@ -46,7 +53,7 @@ function showDeleteWarning(todo, deleteHandler) {
 }
 
 export default {
-  loadHeader,
+  initView,
   showDeleteWarning,
   updateFilterTab : filterTab.updateFilterTab,
   bindFilterTodo : filterTab.bindFilterTodo,

@@ -17,7 +17,6 @@ class Controller {
     this.view.bindCompleteTodo(this.handleMarkComplete);
 
     //initial paint
-    this.view.loadHeader();
     this.runView(this.model.getAllTodos(), this.model.getSelectedFilter());
   }
 
@@ -62,3 +61,4 @@ class Controller {
 loadData("Adam").then((todoData) => {
   const todoApp = new Controller(new TodoStore(todoData), view);
 });
+view.initView();

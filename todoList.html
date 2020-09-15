@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ToDo List</title>
     <link rel="stylesheet" href="todoList.css" />
-    <link rel="preload" href="./data/todos.json" as="fetch" crossorigin>
+    <link rel="preload" href="./data/todos.json" as="fetch" crossorigin />
   </head>
   <body>
     <div class="container">
@@ -16,55 +16,9 @@
       <div class="main">
         <div class="todoDisplay"></div>
         <div class="sidebar">
-          <div class="filter">
-              <div class="filtericons">
-                <img id="fil-ug-dec" class="filtericons__icon" src="./images/urgency/3.svg" alt="">
-                <img id="fil-ug-inc" class="filtericons__icon" src="./images/urgency/1.svg" alt="">
-                <img id="fil-cg-per" class="filtericons__icon" src="./images/category/1.svg" alt="">
-                <img id="fil-cg-aca" class="filtericons__icon" src="./images/category/2.svg" alt="">
-                <img id="fil-cg-soc" class="filtericons__icon" src="./images/category/3.svg" alt="">
-              </div>
-              <h3 class="filter__label">Filter Todos</h3>
-          </div>
-          <div class="analytics">
-            <div class="analytics__graphic graphic">
-                <div class="analytics__data">
-                    <h1 class="analytics__percentage"></h1>
-                    <h3 class="analytics__ratio"></h3>
-                </div>
-                <div class="graphic__leftHalf graphic__halfCircle">
-                    <div class="graphic__leftProgress graphic__progress"></div>
-                </div>
-                <div class="graphic__rightHalf graphic__halfCircle">
-                    <div class="graphic__rightProgress graphic__progress"></div>
-                </div>
-            </div>
-            <h3 class="analytics__label">Analytics</h3>
-          </div>
-          <div class="addForm">
-            <div class="addForm__banner">
-              <h1>Create ToDo</h1>
-            </div>
-            <form action="submit" class="addForm__form">
-              <label class="addForm__label">Message</label>
-              <input class="addForm__message" type="text" placeholder="Add your todo" />
-              <label class="addForm__label">Urgency</label>
-              <select class="addForm__urgency">
-                <option value="" disabled>Choose your level of urgency</option>
-                <option value="1" selected>Low</option>
-                <option value="2">Medium</option>
-                <option value="3">High</option>
-              </select>
-              <label class="addForm__label">Category</label>
-              <select class="addForm__category">
-                <option value="" disabled>Choose the task category</option>
-                <option value="1" selected>Personal</option>
-                <option value="2">Academic</option>
-                <option value="3">Social</option>
-              </select>
-              <button class="addForm__submit">ADD</button>
-            </form>
-          </div>
+          <div class="filter"></div>
+          <div class="analytics"></div>
+          <div class="addForm"></div>
         </div>
       </div>
     </div>
