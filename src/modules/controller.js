@@ -16,6 +16,8 @@ class Controller {
     this.view.bindFilterTodo(this.handleFilter);
     this.view.bindCompleteTodo(this.handleMarkComplete);
     this.view.bindConfirmDelete(this.forceDelete);
+    this.view.bindUndo(this.handleUndo);
+    this.view.bindRedo(this.handleRedo);
     //initial paint
     this.runView(this.model.getAllTodos(), this.model.getSelectedFilter());
   }
@@ -56,6 +58,13 @@ class Controller {
   handleAdd = (todoBody, urgencyLevel, category) => {
     this.model.addTodo(todoBody, urgencyLevel, category);
   };
+
+  handleUndo = () => {
+    this.model.undo();
+  }
+  handleRedo = () => {
+    this.model.redo();
+  }
 }
 
 function init() {
