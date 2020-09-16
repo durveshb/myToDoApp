@@ -78,7 +78,7 @@ export default class TodoStore {
   }
 
   undo(){
-    if(this.pointInTime === 0) return;
+    if(this.pointInTime <= 0) return;
     if(this.pointInTime === this.history.length){
       this.addToHistory(this.allTodos, this.selectedFilter);
       this.pointInTime = this.pointInTime - 1;
@@ -91,7 +91,7 @@ export default class TodoStore {
   }
 
   redo(){
-    if(this.pointInTime === this.history.length-1 || this.history.length === 0) return;
+    if(this.pointInTime >= this.history.length-1 || this.history.length === 0) return;
     this.pointInTime = this.pointInTime + 1;
     const [todos, selectedFilter] = this.history[this.pointInTime];
     this.allTodos = todos;

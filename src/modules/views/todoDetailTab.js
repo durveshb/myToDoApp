@@ -9,9 +9,29 @@ function handleOptionToggle(e) {
     const options = Array.from(optionContainer.children);
     options.forEach((option) => {
       option.classList.remove("detail--selectedOption");
+      option.dataset.isSelectedOption = false;
     });
     e.target.classList.add("detail--selectedOption");
+    e.target.dataset.isSelectedOption = true;
   }
+}
+
+function createOptionList(name, optionList, activeOptionValue) {
+  const container = createElementHelper("div", "detail__optionContainer");
+  container.dataset.detailtype = name;
+  const options = optionList.map((option) => {
+    const node = createElementHelper("img", "detail__options");
+    node.src = option.src;
+    node.dataset.value = option.value;
+    node.dataset.isSelectedOption = false;
+    if (option.value === activeOptionValue){
+      node.classList.add("detail--selectedOption");
+      node.dataset.isSelectedOption = true;  
+    }
+    return node;
+  });
+  container.append(...options);
+  return container;
 }
 
 function showTodoDetail(todo) {
@@ -19,31 +39,9 @@ function showTodoDetail(todo) {
   const detail = createElementHelper("div", "detail");
   const todoBody = createElementHelper("div", "detail__body", todo.body);
   todoBody.contentEditable = "true";
-  const urgency = createElementHelper("div", "detail__optionContainer");
-  urgency.dataset.detailtype = "urgency";
-  const urgencyOptions = urgencyLevels.map((item) => {
-    const level = createElementHelper("img", "detail__options");
-    level.src = item.src;
-    level.dataset.value = item.value;
-    if (item.value === todo.urgency)
-      level.classList.add("detail--selectedOption");
-
-    return level;
-  });
-  urgency.append(...urgencyOptions);
-
-  const category = createElementHelper("div", "detail__optionContainer");
-  category.dataset.detailtype = "category";
-  const categoryOptions = categories.map((item) => {
-    const category = createElementHelper("img", "detail__options");
-    category.src = item.src;
-    category.dataset.value = item.value;
-    if (item.value === todo.category)
-      category.classList.add("detail--selectedOption");
-
-    return category;
-  });
-  category.append(...categoryOptions);
+  todoBody.dataset.detailtype = "todoBody";
+  const urgency = createOptionList("urgency", urgencyLevels, todo.urgency);
+  const category = createOptionList("category", categories, todo.category);
 
   urgency.addEventListener("click", handleOptionToggle);
   category.addEventListener("click", handleOptionToggle);
@@ -63,7 +61,7 @@ function showTodoDetail(todo) {
     document.body.removeChild(detailWrapper);
   });
   saveBtn.addEventListener("click", () => {
-    changeHelper(todo.id);
+    changeDetailsHelper(todo.id);
     document.body.removeChild(detailWrapper);
   });
   controls.append(cancelbtn, saveBtn);
@@ -72,12 +70,17 @@ function showTodoDetail(todo) {
   document.body.append(detailWrapper);
 }
 
-function changeHelper(id) {
-  const message = document.querySelector(".detail__body");
+function changeDetailsHelper(id) {
+  const message = document.querySelector('[data-detailtype="todoBody"]');
   const [urgency, category] = document.querySelectorAll(
-    ".detail--selectedOption"
+    '[data-is-selected-option="true"]'
   );
-  confirmChangeHandler(id, message.innerHTML, urgency.dataset.value, category.dataset.value);
+  confirmChangeHandler(
+    id,
+    message.innerHTML,
+    urgency.dataset.value,
+    category.dataset.value
+  );
 }
 
 function bindDetailChange(callback) {

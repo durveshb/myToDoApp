@@ -3,6 +3,7 @@ import {createElementHelper} from "./../DOMhelpers.js";
 let confirmDeleteHandler = null;
 
 function showDeleteWarning(todo) {
+  const warningWrapper = createElementHelper("div", "warningWrapper");
   const warning = createElementHelper("div", "deleteWarning");
   const warningNote = createElementHelper(
     "div",
@@ -20,19 +21,20 @@ function showDeleteWarning(todo) {
     "Delete Anyway"
   );
   cancelbtn.addEventListener("click", () => {
-    document.body.removeChild(warning);
+    document.body.removeChild(warningWrapper);
     cancelbtn = null;
     deletebtn = null;
   });
   deletebtn.addEventListener("click", () => {
-    document.body.removeChild(warning);
+    document.body.removeChild(warningWrapper);
     cancelbtn = null;
     deletebtn = null;
     confirmDeleteHandler(todo.id);
   });
 
   warning.append(warningNote, cancelbtn, deletebtn);
-  document.body.append(warning);
+  warningWrapper.append(warning);
+  document.body.append(warningWrapper);
 }
 
 function bindConfirmDelete(callback){

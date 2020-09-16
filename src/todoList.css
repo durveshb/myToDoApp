@@ -149,13 +149,13 @@ body {
     background-color: #456078;
 }
 
-.deleteWarning {
+.warningWrapper {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.6);
     margin: auto;
     z-index: 10;
 
@@ -165,10 +165,20 @@ body {
     flex-direction: column;
 }
 
+.deleteWarning {
+    padding: 30px;
+    border-radius: 30px;
+    background : url("./../images/confirmDeleteBg.png") bottom / cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .deleteNote {
     font-size: 1.3rem;
     padding: 10px;
-    color: #fff;
+    color: #456078;
 }
 
 .warningBtn {
@@ -185,6 +195,11 @@ body {
 .warningBtn:hover {
     transform: scale(1.1);
     cursor: pointer;
+}
+
+.cancelWarning {
+    background-color: #456078;
+    color: #fff;
 }
 
 .deleteAnyway {

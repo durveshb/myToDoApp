@@ -15,8 +15,8 @@ class Controller {
     this.view.bindDeleteTodo(this.handleDelete);
     this.view.bindFilterTodo(this.handleFilter);
     this.view.bindCompleteTodo(this.handleMarkComplete);
-    this.view.bindConfirmDelete(this.forceDelete);
     this.view.bindShowDetail(this.handleShowDetail);
+    this.view.bindConfirmDelete(this.forceDelete);
     this.view.bindDetailChange(this.handleDetailChange);
     this.view.bindUndo(this.handleUndo);
     this.view.bindRedo(this.handleRedo);
