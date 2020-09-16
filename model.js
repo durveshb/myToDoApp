@@ -1,9 +1,9 @@
-const uuid = (function() {
+const uuid = (function () {
   let uid = 100;
-  return function() {
-      uid += 1;
-      return uid;
-  }
+  return function () {
+    uid += 1;
+    return uid.toString();
+  };
 })();
 
 export default class TodoStore {
@@ -16,8 +16,8 @@ export default class TodoStore {
     return this.allTodos;
   }
 
-  getSpecificTodo(id){
-    const [todo] = this.allTodos.filter((todo) => todo.id === Number(id));
+  getSpecificTodo(id) {
+    const [todo] = this.allTodos.filter((todo) => todo.id === id);
     return todo;
   }
 
@@ -25,19 +25,21 @@ export default class TodoStore {
     return this.selectedFilter;
   }
 
-  setFilter(filter) {
-    this.selectedFilter = filter;
+  setFilter(newFilter) {
+    this.selectedFilter = newFilter;
     this.stateChanged(this.allTodos, this.selectedFilter);
   }
 
   toggleTodoComplete(id) {
-    const [todo] = this.allTodos.filter((todo) => todo.id === Number(id));
-    todo.completed = !todo.completed;
+    const todoIndex = this.allTodos.findIndex((todo) => todo.id === id);
+    const currState = this.allTodos[todoIndex].completed;
+    const toggledTodo = {...this.allTodos[todoIndex], completed : !currState};
+    this.allTodos = this.allTodos.slice(0,todoIndex).concat(toggledTodo,this.allTodos.slice(todoIndex+1));
     this.stateChanged(this.allTodos, this.selectedFilter);
   }
 
   addTodo(body, urgency, category) {
-    this.allTodos.push({
+    const newTodo = {
       id: uuid(),
       body,
       urgency,
@@ -45,16 +47,17 @@ export default class TodoStore {
       completed: false,
       pinned: false,
       timestamp: new Date().toLocaleString(),
-    });
+    };
+    this.allTodos = [...this.allTodos, newTodo];
     this.stateChanged(this.allTodos, this.selectedFilter);
   }
 
   deleteTodo(id) {
-    this.allTodos = this.allTodos.filter((todo) => todo.id !== Number(id));
+    this.allTodos = this.allTodos.filter((todo) => todo.id !== id);
     this.stateChanged(this.allTodos, this.selectedFilter);
   }
 
-  bindStateChange(callback){
+  bindStateChange(callback) {
     this.stateChanged = callback;
   }
 }

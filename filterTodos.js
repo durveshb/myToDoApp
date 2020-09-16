@@ -1,8 +1,16 @@
 const incUrgency = 1;
 const decUrgency = -1;
-const onlyPersonal = 1;
-const onlyAcademic = 2;
-const onlySocial = 3;
+const onlyPersonal = "1";
+const onlyAcademic = "2";
+const onlySocial = "3";
+
+export const filters = [
+  { filId: "fil-ug-dec", src: "./images/urgency/3.svg" },
+  { filId: "fil-ug-inc", src: "./images/urgency/1.svg" },
+  { filId: "fil-cg-per", src: "./images/category/1.svg" },
+  { filId: "fil-cg-aca", src: "./images/category/2.svg" },
+  { filId: "fil-cg-soc", src: "./images/category/3.svg" },
+]
 
 function makeObjCopy(obj) {
   const copy = {};

@@ -16,6 +16,7 @@ function initformTab() {
     "Add your todo..",
     "addForm__message"
   );
+  input.dataset.addform = "message";
   const urgencyLabel = createElementHelper(
     "label",
     "addForm__label",
@@ -26,6 +27,7 @@ function initformTab() {
     ["", "1", "2", "3"]
   );
   urgency.classList = "addForm__urgency";
+  urgency.dataset.addform = "urgency";
   const categoryLabel = createElementHelper(
     "label",
     "addForm__label",
@@ -36,7 +38,7 @@ function initformTab() {
     ["", "1", "2", "3"]
   );
   category.className = "addForm__category";
-
+  category.dataset.addform = "category";
   const submit = createElementHelper("button", "addForm__submit", "Add");
 
   form.append(
@@ -49,14 +51,16 @@ function initformTab() {
     submit
   );
 
-  document.querySelector(".addForm").append(banner, form);
+  document
+    .querySelector('[data-containertype="addFormTab"]')
+    .append(banner, form);
 }
 
 function addTodoHelper(e, callback) {
   e.preventDefault();
-  const todoBody = document.querySelector(".addForm__message");
-  const urgency = document.querySelector(".addForm__urgency");
-  const category = document.querySelector(".addForm__category");
+  const todoBody = document.querySelector('[data-addform="message"]');
+  const urgency = document.querySelector('[data-addform="urgency"]');
+  const category = document.querySelector('[data-addform="category"]');
 
   if (todoBody.value !== "")
     callback(todoBody.value, urgency.value, category.value);
@@ -68,7 +72,7 @@ function addTodoHelper(e, callback) {
 
 function bindAddTodo(callback) {
   document
-    .querySelector(".addForm__form")
+    .querySelector('[data-containertype="addFormTab"]')
     .addEventListener("submit", (e) => addTodoHelper(e, callback));
 }
 

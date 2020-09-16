@@ -34,7 +34,7 @@ function makeTodoNode(data) {
 }
 
 function displayTodos(data) {
-  const todoDisplay = document.querySelector(".todoDisplay");
+  const todoDisplay = document.querySelector('[data-containertype="todoDisplay"]');
   todoDisplay.innerHTML = "";
 
   const todoNodes = data.map((item) => {
@@ -52,7 +52,7 @@ function deleteTodoHelper(e, callback) {
 
 function bindDeleteTodo(callback) {
   document
-    .querySelector(".todoDisplay")
+    .querySelector('[data-containertype="todoDisplay"]')
     .addEventListener("click", (e) => deleteTodoHelper(e, callback));
 }
 
@@ -65,7 +65,7 @@ function completeTodoHelper(e, callback) {
 
 function bindCompleteTodo(callback) {
   document
-    .querySelector(".todoDisplay")
+    .querySelector('[data-containertype="todoDisplay"]')
     .addEventListener("click", (e) => completeTodoHelper(e, callback));
 }
 

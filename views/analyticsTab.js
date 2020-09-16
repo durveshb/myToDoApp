@@ -4,7 +4,10 @@ function initAnalyticsTab() {
   const graphic = createElementHelper("div", "analytics__graphic graphic");
   const numericalData = createElementHelper("div", "analytics__data");
   const percentage = createElementHelper("div", "analytics__percentage");
+  percentage.dataset.analytics = "percentage";
   const ratio = createElementHelper("div", "analytics__ratio");
+  ratio.dataset.analytics = "ratio";
+
   const visualLeft = createElementHelper(
     "div",
     "graphic__leftHalf graphic__halfCircle"
@@ -13,6 +16,7 @@ function initAnalyticsTab() {
     "div",
     "graphic__leftProgress graphic__progress"
   );
+  visualLeftInner.dataset.analytics = "graphicLeft"
   const visualRight = createElementHelper(
     "div",
     "graphic__rightHalf graphic__halfCircle"
@@ -21,6 +25,7 @@ function initAnalyticsTab() {
     "div",
     "graphic__rightProgress graphic__progress"
   );
+  visualRigthInner.dataset.analytics = "graphicRight";
   const label = createElementHelper("h3", "analytics__label", "Analytics");
 
   numericalData.append(percentage, ratio);
@@ -28,12 +33,12 @@ function initAnalyticsTab() {
   visualRight.append(visualRigthInner);
   graphic.append(numericalData, visualLeft, visualRight);
 
-  document.querySelector(".analytics").append(graphic, label);
+  document.querySelector('[data-containertype="analyticsTab"]').append(graphic, label);
 }
 
 function updateProgressCircle(percentage) {
-  const progressL = document.querySelector(".graphic__leftProgress");
-  const progressR = document.querySelector(".graphic__rightProgress");
+  const progressL = document.querySelector('[data-analytics="graphicLeft"]');
+  const progressR = document.querySelector('[data-analytics="graphicRight"]');
 
   progressL.style.transform =
     "rotate(" +
@@ -44,8 +49,8 @@ function updateProgressCircle(percentage) {
 }
 
 function updateAnalytics(data) {
-  const percentage = document.querySelector(".analytics__percentage");
-  const ratio = document.querySelector(".analytics__ratio");
+  const percentage = document.querySelector('[data-analytics="percentage"]');
+  const ratio = document.querySelector('[data-analytics="ratio"]');
 
   const completed = data.filter((todo) => todo.completed).length;
   const total = data.length;

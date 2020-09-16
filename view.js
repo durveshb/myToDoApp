@@ -14,7 +14,7 @@ function initView(){
 
 function loadHeader() {
   const currDate = new Date();
-  document.querySelector(".header__calender").innerHTML = `${
+  document.querySelector('[data-header="calender"]').innerHTML = `${
     days[currDate.getDay()]
   }, ${months[currDate.getMonth()]} ${currDate.getDate()}`;
 }

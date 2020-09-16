@@ -20,25 +20,26 @@ class Controller {
     this.runView(this.model.getAllTodos(), this.model.getSelectedFilter());
   }
 
-  runView = (data, filter) => {
-    const filteredData = filterTodos(data, filter);
-    this.view.displayTodos(filteredData);
+  runView = (todos, filter) => {
+    const filteredTodos = filterTodos(todos, filter);
+    console.log(todos, filteredTodos);
+    this.view.displayTodos(filteredTodos);
     this.view.updateFilterTab(filter);
-    this.view.updateAnalytics(filteredData);
+    this.view.updateAnalytics(filteredTodos);
   };
 
   handleDelete = (id) => {
     const targetTodo = this.model.getSpecificTodo(id);
     if (targetTodo.completed) {
       this.model.deleteTodo(id);
-    }else {
+    } else {
       this.view.showDeleteWarning(targetTodo, this.forceDelete);
     }
   };
 
   forceDelete = (id) => {
     this.model.deleteTodo(id);
-  }
+  };
 
   handleMarkComplete = (id) => {
     this.model.toggleTodoComplete(id);
