@@ -1,4 +1,5 @@
 import {createElementHelper} from "./../DOMhelpers.js";
+import {urgencyLevels,categories} from "./../appConstants.js";
 
 function makeTodoNode(data) {
   const todo = createElementHelper("div", "todo");
@@ -12,9 +13,9 @@ function makeTodoNode(data) {
   );
   const features = createElementHelper("div", "todo__features");
   const urgency = createElementHelper("img", "todo__featureImg");
-  urgency.src = `./images/urgency/${data.urgency}.svg`;
+  urgency.src = urgencyLevels.find(level => level.value === data.urgency).src;
   const category = createElementHelper("img", "todo__featureImg");
-  category.src = `./images/category/${data.category}.svg`;
+  category.src = categories.find(category => category.value === data.category).src;
   features.append(urgency, category);
   const markComplete = createElementHelper(
     "div",

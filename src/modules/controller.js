@@ -15,14 +15,14 @@ class Controller {
     this.view.bindDeleteTodo(this.handleDelete);
     this.view.bindFilterTodo(this.handleFilter);
     this.view.bindCompleteTodo(this.handleMarkComplete);
-
+    this.view.bindConfirmDelete(this.forceDelete);
     //initial paint
     this.runView(this.model.getAllTodos(), this.model.getSelectedFilter());
   }
 
   runView = (todos, filter) => {
+    console.log(todos);
     const filteredTodos = filterTodos(todos, filter);
-    console.log(todos, filteredTodos);
     this.view.displayTodos(filteredTodos);
     this.view.updateFilterTab(filter);
     this.view.updateAnalytics(filteredTodos);
@@ -33,7 +33,7 @@ class Controller {
     if (targetTodo.completed) {
       this.model.deleteTodo(id);
     } else {
-      this.view.showDeleteWarning(targetTodo, this.forceDelete);
+      this.view.showDeleteWarning(targetTodo);
     }
   };
 
@@ -59,7 +59,13 @@ class Controller {
   };
 }
 
-loadData("Adam").then((todoData) => {
-  const todoApp = new Controller(new TodoStore(todoData), view);
-});
-view.initView();
+function init() {
+  view.initStaticDOM();
+  loadData("Adam").then((todoData) => {
+    const todoApp = new Controller(new TodoStore(todoData), view);
+  });
+}
+
+export default {
+  init,
+};

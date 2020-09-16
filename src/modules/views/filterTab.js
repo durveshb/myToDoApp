@@ -1,5 +1,5 @@
 import { createElementHelper } from "./../DOMhelpers.js";
-import {filters} from "./../filterTodos.js";
+import {filters} from "./../appConstants.js";
 
 function initFilterTab() {
   const filtericonsTab = createElementHelper("div", "filtericons");

@@ -22,8 +22,6 @@ export function createSelectInput(options,values){
 
     return node;
   })
-  selectOptions[0].disabled = true;
   select.append(...selectOptions);
-
   return select;
 }

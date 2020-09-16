@@ -4,7 +4,9 @@ import {
   createSelectInput,
 } from "./../DOMhelpers.js";
 
-function initformTab() {
+import {urgencyLevels, categories} from "./../appConstants.js";
+
+function initFormTab() {
   const banner = createElementHelper("div", "addForm__banner");
   const bannerInner = createElementHelper("h1", null, "Create ToDO");
   banner.append(bannerInner);
@@ -23,8 +25,8 @@ function initformTab() {
     "Urgency"
   );
   const urgency = createSelectInput(
-    ["Chose your level of urgency", "Low", "Medium", "High"],
-    ["", "1", "2", "3"]
+    urgencyLevels.map((item)=>item.level),
+    urgencyLevels.map((item)=>item.value)
   );
   urgency.classList = "addForm__urgency";
   urgency.dataset.addform = "urgency";
@@ -34,8 +36,8 @@ function initformTab() {
     "Category"
   );
   const category = createSelectInput(
-    ["Chose your task Category", "Personal", "Academic", "Social"],
-    ["", "1", "2", "3"]
+    categories.map((item)=>item.name),
+    categories.map((item)=>item.value)
   );
   category.className = "addForm__category";
   category.dataset.addform = "category";
@@ -77,6 +79,6 @@ function bindAddTodo(callback) {
 }
 
 export default {
-  initformTab,
+  initFormTab,
   bindAddTodo,
 };

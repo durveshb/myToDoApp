@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ToDo List</title>
     <link rel="stylesheet" href="todoList.css" />
-    <link rel="preload" href="./data/todos.json" as="fetch" crossorigin />
+    <link rel="preload" href="./../../data/todos.json" as="fetch" crossorigin />
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        <div data-header="calender" class="header__calender"></div>
-        <div data-header="logo" class="header__logo">To-Do List</div>
+      <div data-containertype="header" class="header">
       </div>
       <div class="main">
         <div data-containertype="todoDisplay" class="todoDisplay"></div>

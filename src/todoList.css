@@ -48,7 +48,7 @@ body {
     padding: 10px;
     margin-right: 10px;
     border-radius: 30px;
-    background: url("./images/bg.png") right / cover;
+    background: url("./../../images/bg.png") right / cover;
     overflow: scroll;
     display: flex;
     flex-flow: column wrap;
