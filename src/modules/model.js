@@ -63,6 +63,14 @@ export default class TodoStore {
     this.stateChanged(this.allTodos, this.selectedFilter);
   }
 
+  updateTodo(id, updateObject){
+    this.addToHistory(this.allTodos,this.selectedFilter);
+    const todoIndex = this.allTodos.findIndex((todo) => todo.id === id);
+    const toggledTodo = {...this.allTodos[todoIndex], ...updateObject};
+    this.allTodos = this.allTodos.slice(0,todoIndex).concat(toggledTodo,this.allTodos.slice(todoIndex+1));
+    this.stateChanged(this.allTodos, this.selectedFilter);
+  }
+
   addToHistory(todos, selectedFilter){
     const historyNode = [todos,selectedFilter];
     this.history = [...this.history.slice(0,this.pointInTime), historyNode];

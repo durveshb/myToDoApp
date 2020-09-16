@@ -30,7 +30,10 @@ function makeTodoNode(data) {
   const deleteButton = createElementHelper("div", "todo__deleteBtn", "X");
   deleteButton.dataset.type = "deleteBtn";
 
-  todo.append(todoBody, timestamp, features, markComplete, deleteButton);
+  const detailButton = createElementHelper("div", "todo__detailBtn", "i");
+  detailButton.dataset.type = "detailBtn";
+
+  todo.append(todoBody, timestamp, features, markComplete, deleteButton, detailButton);
   return todo;
 }
 
@@ -70,8 +73,22 @@ function bindCompleteTodo(callback) {
     .addEventListener("click", (e) => completeTodoHelper(e, callback));
 }
 
+function showDetailHelper(e, callback) {
+  if (e.target.dataset.type === "detailBtn") {
+    const focusedTodo = event.target.closest(".todo");
+    callback(focusedTodo.id);
+  }
+}
+
+function bindShowDetail(callback) {
+  document
+    .querySelector('[data-containertype="todoDisplay"]')
+    .addEventListener("click", (e) => showDetailHelper(e, callback));
+}
+
 export default {
   displayTodos,
   bindDeleteTodo,
   bindCompleteTodo,
+  bindShowDetail
 };

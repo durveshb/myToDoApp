@@ -16,6 +16,8 @@ class Controller {
     this.view.bindFilterTodo(this.handleFilter);
     this.view.bindCompleteTodo(this.handleMarkComplete);
     this.view.bindConfirmDelete(this.forceDelete);
+    this.view.bindShowDetail(this.handleShowDetail);
+    this.view.bindDetailChange(this.handleDetailChange);
     this.view.bindUndo(this.handleUndo);
     this.view.bindRedo(this.handleRedo);
     //initial paint
@@ -45,6 +47,22 @@ class Controller {
   handleMarkComplete = (id) => {
     this.model.toggleTodoComplete(id);
   };
+
+  handleShowDetail = (id) => {
+    const targetTodo = this.model.getSpecificTodo(id);
+    this.view.showTodoDetail(targetTodo);
+  }
+
+  handleDetailChange = (id,message,urgency,category) => {
+    const updateObject = {
+      body : message,
+      urgency,
+      category,
+      completed: false
+    }
+
+    this.model.updateTodo(id, updateObject);
+  }
 
   handleFilter = (newFil) => {
     const currFil = this.model.getSelectedFilter();

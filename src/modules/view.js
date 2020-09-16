@@ -3,6 +3,7 @@ import filterTab from "./views/filterTab.js";
 import analyticsTab from "./views/analyticsTab.js";
 import addFormTab from "./views/addFormTab.js";
 import confirmDeleteTab from "./views/confirmDeleteTab.js";
+import todoDetailTab from "./views/todoDetailTab.js";
 import headerTab from "./views/headerTab.js";
 
 function initStaticDOM() {
@@ -29,11 +30,14 @@ export default {
   bindRedo,
   showDeleteWarning: confirmDeleteTab.showDeleteWarning,
   bindConfirmDelete: confirmDeleteTab.bindConfirmDelete,
+  showTodoDetail: todoDetailTab.showTodoDetail,
+  bindDetailChange: todoDetailTab.bindDetailChange,
   updateFilterTab: filterTab.updateFilterTab,
   bindFilterTodo: filterTab.bindFilterTodo,
   updateAnalytics: analyticsTab.updateAnalytics,
   displayTodos: todoDisplayTab.displayTodos,
   bindDeleteTodo: todoDisplayTab.bindDeleteTodo,
   bindCompleteTodo: todoDisplayTab.bindCompleteTodo,
+  bindShowDetail : todoDisplayTab.bindShowDetail,
   bindAddTodo: addFormTab.bindAddTodo,
 };
