@@ -7,14 +7,13 @@ export const filters = [
 ];
 
 export const urgencyLevels = [
-    {level : "Low", value : "1", src : "./../images/urgLow.svg"},
-    {level : "Medium", value : "2", src : "./../images/urgMedium.svg"},
-    {level : "High", value : "3", src : "./../images/urgHigh.svg"}
+    {filId:"ug-1", name : "Low", value : "1", src : "./../images/urgLow.svg"},
+    {filId:"ug-2", name : "Medium", value : "2", src : "./../images/urgMedium.svg"},
+    {filId:"ug-3", name : "High", value : "3", src : "./../images/urgHigh.svg"}
 ]
 
 export const categories = [
-    {name : "Personal", value : "1", src : "./../images/catPersonal.svg"},
-    {name : "Academic", value : "2", src : "./../images/catAcademic.svg"},
-    {name : "Social", value : "3", src : "./../images/catSocial.svg"},
-    {name : "Random", value : "4", src : "./../images/catPersonal.svg"}
+    {filId:"ct-1", name : "Personal", value : "1", src : "./../images/catPersonal.svg"},
+    {filId:"ct-2", name : "Academic", value : "2", src : "./../images/catAcademic.svg"},
+    {filId:"ct-3", name : "Social", value : "3", src : "./../images/catSocial.svg"}
 ]

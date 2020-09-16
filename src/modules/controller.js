@@ -21,7 +21,6 @@ class Controller {
   }
 
   runView = (todos, filter) => {
-    console.log(todos);
     const filteredTodos = filterTodos(todos, filter);
     this.view.displayTodos(filteredTodos);
     this.view.updateFilterTab(filter);

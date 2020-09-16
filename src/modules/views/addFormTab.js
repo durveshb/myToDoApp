@@ -25,7 +25,7 @@ function initFormTab() {
     "Urgency"
   );
   const urgency = createSelectInput(
-    urgencyLevels.map((item)=>item.level),
+    urgencyLevels.map((item)=>item.name),
     urgencyLevels.map((item)=>item.value)
   );
   urgency.classList = "addForm__urgency";

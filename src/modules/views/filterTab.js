@@ -1,9 +1,10 @@
 import { createElementHelper } from "./../DOMhelpers.js";
-import {filters} from "./../appConstants.js";
+import {urgencyLevels, categories} from "./../appConstants.js";
 
 function initFilterTab() {
   const filtericonsTab = createElementHelper("div", "filtericons");
   filtericonsTab.dataset.containertype = "filtericonsTab";
+  const filters = urgencyLevels.concat(categories);
   const filtericons = filters.map((fil) => {
     const icon = createElementHelper("img", "filtericons__icon");
     icon.dataset.filId = fil.filId;
