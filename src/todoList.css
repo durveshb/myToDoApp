@@ -22,7 +22,7 @@ body {
     height: 10vh;
     border-radius: 30px;
     background-color: #fff;
-    background: url("./images/headerbg.png") top/cover;
+    background: url("./../images/headerbg.png") top/cover;
     display: flex;
     justify-content: space-between;
 }
@@ -51,7 +51,7 @@ body {
     padding: 10px;
     margin-right: 10px;
     border-radius: 30px;
-    background: url("./images/bg.png") right / cover;
+    background: url("./../images/bg.png") right / cover;
     overflow: scroll;
     display: flex;
     flex-flow: column wrap;
@@ -171,7 +171,7 @@ body {
 .deleteWarning {
     padding: 30px;
     border-radius: 30px;
-    background : url("./images/confirmDeleteBg.png") bottom / cover;
+    background : url("./../images/confirmDeleteBg.png") bottom / cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -228,7 +228,7 @@ body {
 
 .detail {
     width: 400px;
-    background: url("./images/detailbg.png") left / contain;
+    background: url("./../images/detailbg.png") left / contain;
     padding: 30px;
     border-radius: 30px;
     display: flex;
