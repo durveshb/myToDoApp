@@ -15,12 +15,12 @@ function initStaticDOM() {
 
 function bindUndo(callback) {
   window.addEventListener("keydown", (e) => {
-    if (!e.shiftKey && e.metaKey && e.keyCode === 90) callback();
+    if (!e.shiftKey && e.metaKey && e.key === "z") callback();
   });
 }
 function bindRedo(callback) {
   window.addEventListener("keydown", (e) => {
-    if (e.shiftKey && e.metaKey && e.keyCode === 90) callback();
+    if (e.shiftKey && e.metaKey && e.key === "z") callback();
   });
 }
 
